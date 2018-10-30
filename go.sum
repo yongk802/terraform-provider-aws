@@ -36,6 +36,7 @@ github.com/armon/go-radix v1.0.0 h1:F4z6KzEeeQIMeLFa97iZU6vupzoecKdU5TX24SNppXI=
 github.com/armon/go-radix v1.0.0/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
 github.com/aws/aws-sdk-go v1.15.48 h1:b4uYtqfWWATa/WaKyMM/s0bOiXC1yls+ogxPqAY2Bgs=
 github.com/aws/aws-sdk-go v1.15.48/go.mod h1:mFuSZ37Z9YOHbQEwBWztmVzqXrEkub65tZoCYDt7FT0=
+github.com/aws/aws-sdk-go v1.15.55/go.mod h1:mFuSZ37Z9YOHbQEwBWztmVzqXrEkub65tZoCYDt7FT0=
 github.com/aws/aws-sdk-go v1.15.57 h1:inht07/mRNnvV4uAjjVgTVD7/rF+j0mXllYcNQxDgGA=
 github.com/aws/aws-sdk-go v1.15.57/go.mod h1:mFuSZ37Z9YOHbQEwBWztmVzqXrEkub65tZoCYDt7FT0=
 github.com/beevik/etree v0.0.0-20171015221209-af219c0c7ea1/go.mod h1:r8Aw8JqVegEf0w2fDnATrX9VpkMcyFeM0FhwO62wh+A=
@@ -163,6 +164,8 @@ github.com/hashicorp/serf v0.0.0-20160124182025-e4ec8cc423bb h1:ZbgmOQt8DOg796fi
 github.com/hashicorp/serf v0.0.0-20160124182025-e4ec8cc423bb/go.mod h1:h/Ru6tmZazX7WO/GDmwdpS975F019L4t5ng5IgwbNrE=
 github.com/hashicorp/terraform v0.11.9-beta1.0.20181019210637-dbaf34739254 h1:eAa/i/ODysUHDZ02ecZ47FVJFNtP/gh/gG6h+t1JZuU=
 github.com/hashicorp/terraform v0.11.9-beta1.0.20181019210637-dbaf34739254/go.mod h1:YvER8PBvJQTIG75o/uecN8Rs11kIqhwgJotgIMnVZJ4=
+github.com/hashicorp/terraform v0.11.9-beta1.0.20181030211031-6383ffc2aa1b h1:WuQas5EYurUXwP7WTUNyk7VDx30DwDmx889cv5vw0ls=
+github.com/hashicorp/terraform v0.11.9-beta1.0.20181030211031-6383ffc2aa1b/go.mod h1:c16IVVdhvB0IRH1YiqIQMLnyip/wAgzirH6UMkWJruE=
 github.com/hashicorp/vault v0.0.0-20161029210149-9a60bf2a50e4/go.mod h1:KfSyffbKxoVyspOdlaGVjIuwLobi07qD1bAbosPMpP0=
 github.com/hashicorp/vault v0.11.3 h1:V9l0flz+kVRxsjulcn9ZUrjy9hLFAtl7/Rz6YyWZMpU=
 github.com/hashicorp/vault v0.11.3/go.mod h1:KfSyffbKxoVyspOdlaGVjIuwLobi07qD1bAbosPMpP0=
@@ -294,6 +297,7 @@ github.com/spf13/pflag v1.0.2/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnIn
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/terraform-providers/terraform-provider-aws v1.40.0/go.mod h1:uvqaeKnm2ydZ2LuKuW1NDNBu6heC/7IDGXWm36/6oKs=
+github.com/terraform-providers/terraform-provider-aws v1.41.0/go.mod h1:uvqaeKnm2ydZ2LuKuW1NDNBu6heC/7IDGXWm36/6oKs=
 github.com/terraform-providers/terraform-provider-openstack v0.0.0-20170616075611-4080a521c6ea h1:IfuzHOI3XwwYZS2Xw8SQbxOtGXlIUrKtXtuDCTNxmsQ=
 github.com/terraform-providers/terraform-provider-openstack v0.0.0-20170616075611-4080a521c6ea/go.mod h1:2aQ6n/BtChAl1y2S60vebhyJyZXBsuAI5G4+lHrT1Ew=
 github.com/terraform-providers/terraform-provider-template v1.0.0 h1:g2pyFaAJu369iAb7qGWmVwtQ15/35lRAfW91Je8wLjE=
