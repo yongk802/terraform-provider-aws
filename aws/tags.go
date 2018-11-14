@@ -100,7 +100,17 @@ func setVolumeTags(conn *ec2.EC2, d *schema.ResourceData) error {
 				return nil
 			})
 			if err != nil {
-				return err
+				// Retry without time bounds for EC2 throttling
+				if isResourceTimeoutError(err) {
+					log.Printf("[DEBUG] Removing volume tags: %#v from %s", remove, d.Id())
+					_, err := conn.DeleteTags(&ec2.DeleteTagsInput{
+						Resources: volumeIds,
+						Tags:      remove,
+					})
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 		if len(create) > 0 {
@@ -120,7 +130,17 @@ func setVolumeTags(conn *ec2.EC2, d *schema.ResourceData) error {
 				return nil
 			})
 			if err != nil {
-				return err
+				// Retry without time bounds for EC2 throttling
+				if isResourceTimeoutError(err) {
+					log.Printf("[DEBUG] Creating vol tags: %s for %s", create, d.Id())
+					_, err := conn.CreateTags(&ec2.CreateTagsInput{
+						Resources: volumeIds,
+						Tags:      create,
+					})
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
@@ -155,7 +175,17 @@ func setTags(conn *ec2.EC2, d *schema.ResourceData) error {
 				return nil
 			})
 			if err != nil {
-				return err
+				// Retry without time bounds for EC2 throttling
+				if isResourceTimeoutError(err) {
+					log.Printf("[DEBUG] Removing tags: %#v from %s", remove, d.Id())
+					_, err := conn.DeleteTags(&ec2.DeleteTagsInput{
+						Resources: []*string{aws.String(d.Id())},
+						Tags:      remove,
+					})
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 		if len(create) > 0 {
@@ -175,7 +205,17 @@ func setTags(conn *ec2.EC2, d *schema.ResourceData) error {
 				return nil
 			})
 			if err != nil {
-				return err
+				// Retry without time bounds for EC2 throttling
+				if isResourceTimeoutError(err) {
+					log.Printf("[DEBUG] Creating tags: %s for %s", create, d.Id())
+					_, err := conn.CreateTags(&ec2.CreateTagsInput{
+						Resources: []*string{aws.String(d.Id())},
+						Tags:      create,
+					})
+					if err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
