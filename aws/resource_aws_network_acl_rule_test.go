@@ -87,6 +87,40 @@ func TestAccAWSNetworkAclRule_ipv6ICMP(t *testing.T) {
 	})
 }
 
+// Reference: https://github.com/terraform-providers/terraform-provider-aws/issues/6710
+func TestAccAWSNetworkAclRule_ipv6VpcAssignGeneratedIpv6CidrBlockUpdate(t *testing.T) {
+	var networkAcl ec2.NetworkAcl
+	var vpc ec2.Vpc
+	rName := acctest.RandomWithPrefix("tf-acc-test")
+	vpcResourceName := "aws_vpc.test"
+	resourceName := "aws_network_acl_rule.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSNetworkAclRuleDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWSNetworkAclRuleConfigIpv6VpcAssignGeneratedIpv6CidrBlockUpdate(rName, false),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckVpcExists(vpcResourceName, &vpc),
+					resource.TestCheckResourceAttr(vpcResourceName, "assign_generated_ipv6_cidr_block", "false"),
+					resource.TestCheckResourceAttr(vpcResourceName, "ipv6_cidr_block", ""),
+				),
+			},
+			{
+				Config: testAccAWSNetworkAclRuleConfigIpv6VpcAssignGeneratedIpv6CidrBlockUpdate(rName, true),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckVpcExists(vpcResourceName, &vpc),
+					resource.TestCheckResourceAttr(vpcResourceName, "assign_generated_ipv6_cidr_block", "true"),
+					resource.TestMatchResourceAttr(vpcResourceName, "ipv6_cidr_block", regexp.MustCompile(`/56$`)),
+					testAccCheckAWSNetworkAclRuleExists(resourceName, &networkAcl),
+				),
+			},
+		},
+	})
+}
+
 func TestAccAWSNetworkAclRule_allProtocol(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -539,4 +573,37 @@ resource "aws_network_acl_rule" "test" {
   to_port         = -1
 }
 `, rName, rName)
+}
+
+func testAccAWSNetworkAclRuleConfigIpv6VpcAssignGeneratedIpv6CidrBlockUpdate(rName string, ipv6Enabled bool) string {
+	return fmt.Sprintf(`
+resource "aws_vpc" "test" {
+  assign_generated_ipv6_cidr_block = %t
+  cidr_block                       = "10.3.0.0/16"
+
+  tags {
+    Name = %q
+  }
+}
+
+resource "aws_network_acl" "test" {
+  vpc_id = "${aws_vpc.test.id}"
+
+  tags {
+    Name = %q
+  }
+}
+
+resource "aws_network_acl_rule" "test" {
+  count = "${%t ? 1 : 0}"
+
+  from_port       = 22
+  ipv6_cidr_block = "${aws_vpc.test.ipv6_cidr_block}"
+  network_acl_id  = "${aws_network_acl.test.id}"
+  protocol        = "tcp"
+  rule_action     = "allow"
+  rule_number     = 150
+  to_port         = 22
+}
+`, ipv6Enabled, rName, rName, ipv6Enabled)
 }
